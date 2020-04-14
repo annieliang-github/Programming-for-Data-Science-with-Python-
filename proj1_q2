@@ -1,0 +1,11 @@
+Which five customers spent the most on rental films of all times?
+
+SELECT cu.first_name ||' '||cu.last_name AS name,
+       cu.customer_id,
+       SUM(p.amount)
+FROM rental r
+JOIN customer cu ON cu.customer_id = r.customer_id
+JOIN payment p ON p.customer_id = cu.customer_id
+GROUP BY 2
+ORDER BY 3 DESC
+LIMIT 5;

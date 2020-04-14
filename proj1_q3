@@ -1,0 +1,22 @@
+In Feburary 2006, which country rented the most films? Select top 10.
+
+SELECT
+  country.country, 
+  r.rental_date,
+  DATE_PART('month', r.rental_date) AS rental_month, 
+  DATE_PART('year', r.rental_date) AS rental_year,
+  COUNT(*)
+FROM rental r
+JOIN customer cu
+  ON r.customer_id = cu.customer_id
+JOIN address 
+  ON cu.address_id = address.address_id
+JOIN city
+  ON city.city_id = address.city_id
+JOIN country
+  ON city.country_id = country.country_id  
+WHERE DATE_PART('month', r.rental_date) = 2
+AND DATE_PART('year', r.rental_date) = 2006
+GROUP BY 1, 2
+ORDER BY count DESC
+LIMIT 10;
